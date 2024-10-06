@@ -22,6 +22,7 @@ function App() {
     <>
       {activePage === "/" && <Login onLogin={handleLogin} />}
       {activePage === "/assesment" && <Dashboard />}
+      
     </>
   );
 }

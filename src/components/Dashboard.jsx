@@ -1,19 +1,45 @@
-import React, { useState } from "react";
-import Assesment from "./Assesment";
+import React, { useState, useEffect } from "react"; 
+import Assessment from "./Assesment"
 
 function Dashboard() {
   const [isNewAssessmentOpen, setIsNewAssessmentOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [assessments, setAssessments] = useState([]);
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("userName");
+    if (storedName) {
+      setUserName(storedName);
+      setAssessments([
+        {
+          featureName: "Feature A",
+          state: "Completed",
+          riskRank: "High",
+          requirements: "Requirement A",
+          openQuestions: "None",
+          type: "Diagram",
+          creator: storedName, 
+          createdAt: "2023-10-05",
+        },
+      ]);
+    }
+  }, []);
 
   const handleNewAssessment = () => {
     setIsNewAssessmentOpen(true);
   };
+
   const closeNewAssessment = () => {
     setIsNewAssessmentOpen(false);
   };
 
+  const handleAssessmentSubmit = (newAssessment) => {
+    setAssessments([...assessments, newAssessment]);
+  };
+
   return (
     <div className="relative flex h-fit bg-gray-100">
-      <div className="w-16 bg-gray-800 text-white flex flex-col items-center py-4 space-y-6">
+       <div className="w-16 bg-gray-800 text-white flex flex-col items-center py-4 space-y-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -123,36 +149,39 @@ function Dashboard() {
             0/5
           </div>
         </div>
+        
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className=" text-red-600 size-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
-          />
-        </svg>
+  onClick={() => {
+    localStorage.removeItem("userName"); 
+    window.location.href = '/'; 
+  }}
+  xmlns="http://www.w3.org/2000/svg"
+  className="text-red-600 size-6 cursor-pointer"
+  fill="none"
+  viewBox="0 0 24 24"
+  strokeWidth={1.5}
+  stroke="currentColor"
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+  />
+</svg>
+
       </div>
+
       <div className="flex-1 p-6">
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-2xl font-semibold">Assessments</h1>
-            <p className="text-gray-600">
-              View all assessments and create new ones
-            </p>
+            <p className="text-gray-600">View all assessments and create new ones</p>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700">
-                SH
-              </div>
-              <span>Anshika Sharma</span>
+            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700">
+              {userName.charAt(0).toUpperCase()}
             </div>
+            <span>{userName}</span>
             <button
               onClick={handleNewAssessment}
               className="bg-gray-800 text-white px-4 py-2 rounded-md"
@@ -161,8 +190,9 @@ function Dashboard() {
             </button>
           </div>
         </div>
-        <div className=" h-screen   bg-white rounded-lg overflow-hidden">
-          <table className="min-w-full leading-normal 0">
+
+        <div className="h-screen bg-white rounded-lg overflow-hidden">
+          <table className="min-w-full leading-normal">
             <thead>
               <tr>
                 {[
@@ -184,84 +214,64 @@ function Dashboard() {
                 ))}
               </tr>
             </thead>
-            <tbody className=" cursor-pointer ">
-              {[
-                {
-                  name: "SAMPLE - Order Processing Feature",
-                  state: "Completed",
-                  riskRank: "High",
-                  requirements: 10,
-                  openQuestions: 10,
-                  type: "Diagram",
-                  creator: "Anshika Sharma",
-                  createdAt: "04/10/2024",
-                },
-                {
-                  name: "SAMPLE - Tech Spec - MVP",
-                  state: "Completed",
-                  riskRank: "High",
-                  requirements: 9,
-                  openQuestions: 7,
-                  type: "Gsuite",
-                  creator: "Anshika Sharma",
-                  createdAt: "04/10/2024",
-                },
-              ].map((assessment, index) => (
-                <tr key={index}>
-                <td className="px-5 py-5 border-b border-gray-200 text-sm">
-                  <div className="flex items-center">
-                    <input type="checkbox" className="mr-2" />
-                    <span>{assessment.name}</span>
-                  </div>
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  {assessment.state}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  {assessment.riskRank}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  {assessment.requirements}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  {assessment.openQuestions}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  {assessment.type}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  {assessment.creator}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  {assessment.createdAt}
-                </td>
-              </tr>
-              
+            <tbody>
+              {assessments.map((assessment, index) => (
+                <tr key={index} className="hover:bg-pink-600">
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {assessment.featureName}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {assessment.state}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {assessment.riskRank}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {assessment.requirements}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {assessment.openQuestions}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {assessment.type}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {assessment.creator}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {assessment.createdAt}
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="flex  bg-white justify-between items-center mt-2 p-2">
-                            <button className="bg-gray-200 text-gray-600 px-4 py-2 rounded">Delete</button>
-                            <div className="flex items-center">
-                                <span className="text-gray-600 mr-2">Page Size:</span>
-                                <select className="bg-white border border-gray-300 rounded px-2 py-1">
-                                    <option>20</option>
-                                    <option>10</option>
-                                    <option>50</option>
-                                </select>
-                            </div>
-                            <div className="flex items-center">
-                                <span className="text-gray-600 mr-2">1 to 3 of 3</span>
-                                <button className="bg-gray-200 text-gray-600 px-2 py-1 rounded mr-2">&lt;</button>
-                                <button className="bg-gray-200 text-gray-600 px-2 py-1 rounded">&gt;</button>
-                            </div>
+
+        <div className="flex bg-white justify-between items-center mt-2 p-2">
+          <button className="bg-gray-200 text-gray-600 px-4 py-2 rounded">Delete</button>
+          <div className="flex items-center">
+            <span className="text-gray-600 mr-2">Page Size:</span>
+            <select className="bg-white border border-gray-300 rounded px-2 py-1">
+              <option>20</option>
+              <option>10</option>
+              <option>50</option>
+            </select>
+          </div>
+          <div className="flex items-center">
+            <span className="text-gray-600 mr-2">1 to 3 of 3</span>
+            <button className="bg-gray-200 text-gray-600 px-2 py-1 rounded mr-2">&lt;</button>
+            <button className="bg-gray-200 text-gray-600 px-2 py-1 rounded">&gt;</button>
+          </div>
+        </div>
       </div>
-      </div>
+
       {isNewAssessmentOpen && (
-        <>
-          <Assesment />
-        </>
+        <Assessment
+          onSubmit={(newAssessment) => {
+            handleAssessmentSubmit(newAssessment);
+            closeNewAssessment();
+          }}
+        />
       )}
     </div>
   );

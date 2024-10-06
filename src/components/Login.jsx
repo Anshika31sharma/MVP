@@ -25,12 +25,15 @@ function Login() {
 
   const handleOtpSubmit = () => {
     if (otp) {
+      const userName = email.split("@")[0]; 
+      localStorage.setItem("userName", userName); 
       alert("OTP verified. Redirecting to dashboard...");
       window.location.href = "/assesment";
     } else {
       alert("Please enter the OTP.");
     }
   };
+  
 
   const handleGoogleLogin = () => {
     alert("Google Login");
