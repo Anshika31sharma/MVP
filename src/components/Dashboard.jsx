@@ -161,8 +161,8 @@ function Dashboard() {
             </button>
           </div>
         </div>
-        <div className="bg-white h-screen shadow-md rounded-lg overflow-hidden">
-          <table className="min-w-full leading-normal">
+        <div className=" h-screen   bg-white rounded-lg overflow-hidden">
+          <table className="min-w-full leading-normal 0">
             <thead>
               <tr>
                 {[
@@ -184,7 +184,7 @@ function Dashboard() {
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody className=" cursor-pointer ">
               {[
                 {
                   name: "SAMPLE - Order Processing Feature",
@@ -208,38 +208,55 @@ function Dashboard() {
                 },
               ].map((assessment, index) => (
                 <tr key={index}>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <div className="flex items-center">
-                      <input type="checkbox" className="mr-2" />
-                      <span>{assessment.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    {assessment.state}
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    {assessment.riskRank}
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    {assessment.requirements}
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    {assessment.openQuestions}
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    {assessment.type}
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    {assessment.creator}
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    {assessment.createdAt}
-                  </td>
-                </tr>
+                <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                  <div className="flex items-center">
+                    <input type="checkbox" className="mr-2" />
+                    <span>{assessment.name}</span>
+                  </div>
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  {assessment.state}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  {assessment.riskRank}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  {assessment.requirements}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  {assessment.openQuestions}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  {assessment.type}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  {assessment.creator}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  {assessment.createdAt}
+                </td>
+              </tr>
+              
               ))}
             </tbody>
           </table>
         </div>
+        <div className="flex  bg-white justify-between items-center mt-2 p-2">
+                            <button className="bg-gray-200 text-gray-600 px-4 py-2 rounded">Delete</button>
+                            <div className="flex items-center">
+                                <span className="text-gray-600 mr-2">Page Size:</span>
+                                <select className="bg-white border border-gray-300 rounded px-2 py-1">
+                                    <option>20</option>
+                                    <option>10</option>
+                                    <option>50</option>
+                                </select>
+                            </div>
+                            <div className="flex items-center">
+                                <span className="text-gray-600 mr-2">1 to 3 of 3</span>
+                                <button className="bg-gray-200 text-gray-600 px-2 py-1 rounded mr-2">&lt;</button>
+                                <button className="bg-gray-200 text-gray-600 px-2 py-1 rounded">&gt;</button>
+                            </div>
+      </div>
       </div>
       {isNewAssessmentOpen && (
         <>
