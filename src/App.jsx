@@ -7,15 +7,21 @@ function App() {
   const [activePage, setActivePage] = useState(window.location.pathname);
 
   useEffect(() => {
-    if (activePage === "/assesment") {
-      window.history.pushState({}, "", "/assesment");
-    } else {
-      window.history.pushState({}, "", "/");
-    }
-  }, [activePage]);
+    const handlePopState = () => {
+      setActivePage(window.location.pathname);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+  const navigateTo = (page) => {
+    setActivePage(page);
+    window.history.pushState({}, "", page);
+  };
 
   const handleLogin = () => {
-    setActivePage("/assesment");
+    navigateTo("/assesment");
   };
 
   return (

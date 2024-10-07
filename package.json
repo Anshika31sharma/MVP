@@ -9,6 +9,12 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+    "builds": [
+      {
+        "src": "dist/**/*",
+        "use": "@vercel/static"
+      }
+    ], 
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",
     "devextreme-react": "^24.1.6",
