@@ -41,10 +41,10 @@ function Assessment({ onSubmit }) {
     if (selectedDiagram && featureName.trim() !== "") {
       const selectedImage = images.find((img) => img.id === selectedDiagram);
       const newAssessment = {
-        featureName: featureName, 
+        featureName: featureName,
         state: "In Progress",
         riskRank: "Low",
-        requirements: ` ${selectedImage.name}`, 
+        requirements: `${selectedImage.name}`,
         openQuestions: "None",
         type: "Diagram Upload",
         creator: "Anshika Sharma",
@@ -70,7 +70,7 @@ function Assessment({ onSubmit }) {
   const closeAllModals = () => {
     setIsFileUploadOpen(false);
     setIsDiagramOpen(false);
-    setFeatureName(""); 
+    setFeatureName("");
     setSelectedDiagram(null);
   };
 
@@ -97,8 +97,8 @@ function Assessment({ onSubmit }) {
 
   return (
     <div>
-      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-        <div className="bg-white rounded-lg shadow-lg p-6 w-3/4">
+      <div className="absolute top-0 left-0 w-full h-screen bg-black bg-opacity-50  flex justify-center items-center p-4 md:p-0">
+        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-4xl">
           <div className="flex justify-between items-center border-b pb-4 mb-4">
             <h2 className="text-xl font-semibold">Start a New Assessment</h2>
             <i
@@ -110,7 +110,7 @@ function Assessment({ onSubmit }) {
           <div className="text-center mb-4">
             <p className="text-lg font-medium">Choose Assessment Type:</p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div
               className="border rounded-lg p-4 flex flex-col items-center cursor-pointer hover:bg-gray-100"
               onClick={handleFileUploadClick}
@@ -136,8 +136,8 @@ function Assessment({ onSubmit }) {
           </div>
 
           {isFileUploadOpen && (
-            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-              <div className="bg-white rounded-lg shadow-lg p-6 w-3/4 max-w-2xl">
+            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center p-4 md:p-0">
+              <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
                 <h2 className="text-xl font-semibold mb-4">File Upload</h2>
                 <div className="border-2 border-dashed border-gray-300 rounded p-6 text-center">
                   <i className="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
@@ -173,8 +173,8 @@ function Assessment({ onSubmit }) {
             </div>
           )}
           {isDiagramOpen && (
-            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-              <div className="bg-white rounded-lg shadow-lg p-6 w-3/4 max-w-2xl">
+            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center p-4 md:p-0">
+              <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
                 <h2 className="text-xl font-semibold mb-4">Diagram Upload</h2>
                 <div className="mb-4">
                   <label className="block text-gray-700 font-medium mb-2">
@@ -183,8 +183,8 @@ function Assessment({ onSubmit }) {
                   <input
                     type="text"
                     className="w-full px-3 py-2 border rounded-lg"
-                    value={featureName} 
-                    onChange={(e) => setFeatureName(e.target.value)} 
+                    value={featureName}
+                    onChange={(e) => setFeatureName(e.target.value)}
                   />
                 </div>
                 <div className="mb-4">
@@ -196,7 +196,7 @@ function Assessment({ onSubmit }) {
                     className="w-full px-3 py-2 border rounded-lg"
                     placeholder="Type to search..."
                     value={searchQuery}
-                    onChange={handleSearchChange} 
+                    onChange={handleSearchChange}
                   />
                 </div>
                 {filteredImages.length > 0 && (
@@ -204,7 +204,7 @@ function Assessment({ onSubmit }) {
                     <p className="text-gray-700 font-medium mb-2">
                       Choose a Diagram:
                     </p>
-                    <div className="flex space-x-4">
+                    <div className="flex space-x-4 overflow-auto">
                       {filteredImages.map((image) => (
                         <div
                           key={image.id}
